@@ -1,0 +1,9 @@
+services:
+  elixir:
+    image: elixir
+    container_name: elixir_container
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./program:/home/program
+    command: bash
