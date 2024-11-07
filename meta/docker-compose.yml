@@ -1,0 +1,38 @@
+services:
+  elixir:
+    image: elixir:1.17
+    container_name: elixir
+    stdin_open: true # keep stdin open even if not attached
+    tty: true # allocate a pseudo-TTY
+    ports:
+      - "4000:4000"
+    environment:
+      DB_USER: usuario
+      DB_PASSWORD: secret
+      DB_NAME: elixir
+      DB_HOST: db
+      DB_PORT: "3306"
+    volumes:
+      - ./:/home/program
+    command: bash
+    networks:
+      - metaprograming
+  db:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: elixir
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - metaprograming
+
+networks:
+  metaprograming:
+    driver: bridge
+# docker exec -it elixir /bin/bash
